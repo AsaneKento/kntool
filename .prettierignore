@@ -1,0 +1,7 @@
+*.md
+build
+package-lock.json
+
+.env*
+
+/build
