@@ -1,0 +1,78 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - plugin:react/recommended
+  - standard-with-typescript
+overrides: []
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+  warnOnUnsupportedTypeScriptVersion: false # サポートバージョンのエラーを非表示
+  project: ./tsconfig.json
+plugins:
+  - react
+  - react-hooks
+  - "@typescript-eslint"
+  - prettier
+  - import
+  - unused-imports
+rules:
+  eqeqeq: error # == をエラー === にする
+  eol-last: error # 行末に改行コードがないとエラーにする
+  "@typescript-eslint/explicit-function-return-type": warn # 関数の戻り値の型を必須にする
+  react/jsx-pascal-case: error
+  react/jsx-boolean-value: error
+  react/self-closing-comp: error
+  "@typescript-eslint/consistent-type-imports": # 型のimportにはtypeを必須にする
+    - error
+    - prefer: type-imports
+  react/jsx-curly-brace-presence: # propsに{}を必須にする
+    - error
+    - props: always
+      children: ignore
+  "@typescript-eslint/no-misused-promises": # Promise型をvoidで変換することを許可しない
+    - error
+    - checksVoidReturn:
+        attributes: false
+  react/jsx-handler-names: # on*のイベントの関数名はhandleから始まるようにする
+    - error
+    - eventHandlerPrefix: handle
+      eventHandlerPropPrefix: "on"
+      checkInlineFunction: true
+      checkLocalVariables: true
+  unused-imports/no-unused-imports: error # 使用してないimportをエラーにする
+  "@typescript-eslint/no-unused-vars": off # no-unused-importsとの二重警告を消す
+  react/jsx-uses-react: off # import 'react' を不要にする
+  react/react-in-jsx-scope: off # import 'react' を不要にする
+  import/extensions: # importに拡張子を不要にする
+    - warn
+    - never
+    - js: never
+      jsx: never
+      ts: never
+      tsx: never
+  import/order: # importの並び替え
+    - error
+    - groups:
+        - builtin
+        - external
+        - internal
+        - parent
+        - sibling
+        - object
+        - type
+        - index
+      pathGroupsExcludedImportTypes:
+        - builtin
+      alphabetize:
+        order: asc
+        caseInsensitive: true
+      pathGroups:
+        - pattern: react
+          group: external
+          position: before
+        - pattern: ~/**
+          group: internal
+          position: before
