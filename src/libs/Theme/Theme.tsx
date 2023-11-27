@@ -1,5 +1,5 @@
-import type { ReactElement, ReactNode } from 'react'
-import { ThemeProvider, createTheme } from '@mui/material'
+import type { ReactElement, ReactNode } from "react"
+import { ThemeProvider, createTheme } from "@mui/material"
 
 interface ThemeProps {
   children: ReactNode
