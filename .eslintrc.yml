@@ -19,6 +19,7 @@ plugins:
   - import
   - unused-imports
 rules:
+  "@typescript-eslint/quotes": 0
   eqeqeq: error # == をエラー === にする
   eol-last: error # 行末に改行コードがないとエラーにする
   "@typescript-eslint/explicit-function-return-type": warn # 関数の戻り値の型を必須にする
@@ -76,3 +77,6 @@ rules:
         - pattern: ~/**
           group: internal
           position: before
+settings:
+  react:
+    version: detect
