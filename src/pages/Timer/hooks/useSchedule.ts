@@ -7,7 +7,7 @@ interface UseScheduleReturnType {
 }
 
 export const useSchedule = (): UseScheduleReturnType => {
-  const { timers, setTimers } = useTimerStorage()
+  const { timers } = useTimerStorage()
 
   if (timers.length === 0) {
     const expiryTimestamp = new Date()
