@@ -1,12 +1,12 @@
 import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 import { timersState } from "../state"
-import type { TimerType } from "../types"
+import type { TimerStateType } from "../types"
 import type { SetterOrUpdater } from "recoil"
 
 interface UseTimerStorageReturnType {
-  timers: TimerType[]
-  setTimers: SetterOrUpdater<TimerType[]>
+  timers: TimerStateType[]
+  setTimers: SetterOrUpdater<TimerStateType[]>
 }
 
 export const useTimerStorage = (): UseTimerStorageReturnType => {

@@ -10,20 +10,28 @@ import {
   Typography
 } from "@mui/material"
 import { useForm } from "react-hook-form"
+import { v4 as uuidv4 } from "uuid"
 import { z } from "zod"
 import { useTimerStorage } from "../../hooks/useTimerStorage"
 import type { TimerType } from "../../types"
 
-const timerFormSchema = z.object({
-  title: z.string(),
-  hours: z.string(),
-  minutes: z.string(),
-  seconds: z.string()
-}).refine((data) => {
-  return data.hours !== "00" || data.minutes !== "00" || data.seconds !== "00"
-}, {
-  message: "時間を入力してください"
-})
+const timerFormSchema = z
+  .object({
+    title: z.string(),
+    hours: z.string(),
+    minutes: z.string(),
+    seconds: z.string()
+  })
+  .refine(
+    (data) => {
+      return (
+        data.hours !== "00" || data.minutes !== "00" || data.seconds !== "00"
+      )
+    },
+    {
+      message: "時間を入力してください"
+    }
+  )
 
 export function TimerForm (): ReactElement {
   const { timers, setTimers } = useTimerStorage()
@@ -38,8 +46,9 @@ export function TimerForm (): ReactElement {
     const hours = data.hours
     const minutes = data.minutes
     const seconds = data.seconds
+    const id = uuidv4()
 
-    setTimers([...timers, { title, hours, minutes, seconds }])
+    setTimers([...timers, { id, title, hours, minutes, seconds }])
     reset()
   }
 
