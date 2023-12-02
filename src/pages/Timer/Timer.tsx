@@ -1,14 +1,16 @@
 import { type ReactElement } from "react"
 
+import { Box, Container } from "@mui/material"
 import { TimeCounter } from "./components/Timer"
+import { TimerForm } from "./components/TimerForm"
 
 export function Timer (): ReactElement {
-  const time = new Date()
-  time.setSeconds(time.getSeconds() + 1000)
-
   return (
-    <>
-      <TimeCounter expiryTimestamp={time} timeSecond={1000} />
-    </>
+    <Container sx={{ p: "4rem" }}>
+      <TimeCounter />
+      <Box sx={{ mt: "2rem" }}>
+        <TimerForm />
+      </Box>
+    </Container>
   )
 }

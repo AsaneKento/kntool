@@ -1,5 +1,6 @@
 import type { ReactElement } from "react"
 import { CssBaseline } from "@mui/material"
+import { RecoilRoot } from "recoil"
 import { Theme } from "~/libs/Theme"
 import { Timer } from "./pages/Timer"
 
@@ -8,10 +9,12 @@ function App (): ReactElement {
   time.setSeconds(time.getSeconds() + 1000)
 
   return (
-    <Theme>
-      <CssBaseline />
-      <Timer />
-    </Theme>
+    <RecoilRoot>
+      <Theme>
+        <CssBaseline />
+        <Timer />
+      </Theme>
+    </RecoilRoot>
   )
 }
 

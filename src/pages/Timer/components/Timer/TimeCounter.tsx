@@ -1,8 +1,5 @@
 import type { ReactElement } from "react"
-import {
-  PauseRounded,
-  PlayArrowRounded
-} from "@mui/icons-material"
+import { PauseRounded, PlayArrowRounded } from "@mui/icons-material"
 import {
   Box,
   Container,
@@ -11,22 +8,38 @@ import {
   Typography
 } from "@mui/material"
 import { useTimer } from "react-timer-hook"
+import { useSchedule } from "../../hooks/useSchedule"
+import { useTimeFormat } from "../../hooks/useTimeFormat"
+import { useTimerStorage } from "../../hooks/useTimerStorage"
 
-interface TimeCounterProps {
-  expiryTimestamp: Date
-  timeSecond: number
-}
+export function TimeCounter (): ReactElement {
+  const { format } = useTimeFormat()
+  const { timers, setTimers } = useTimerStorage()
+  const { title, timeSecond, expiryTimestamp } = useSchedule()
 
-export function TimeCounter (props: TimeCounterProps): ReactElement {
-  const { expiryTimestamp, timeSecond } = props
+  const {
+    totalSeconds,
+    seconds,
+    minutes,
+    hours,
+    isRunning,
+    start,
+    pause,
+    restart
+  } = useTimer({
+    expiryTimestamp,
+    autoStart: false,
+    onExpire: () => {
+      setTimers([...timers.slice(1)])
+    }
+  })
 
-  const { totalSeconds, seconds, minutes, hours, isRunning, start, pause } =
-    useTimer({
-      expiryTimestamp,
-      autoStart: false
-    })
+  if (timers.length !== 0 && totalSeconds === 0) {
+    restart(expiryTimestamp, false)
+  }
 
-  const progressPercentage = (totalSeconds / timeSecond) * 100
+  const progressPercentage =
+    totalSeconds === 0 ? 0 : Math.floor((totalSeconds / timeSecond) * 100)
 
   const handleClickStart = (): void => {
     if (isRunning) {
@@ -36,16 +49,13 @@ export function TimeCounter (props: TimeCounterProps): ReactElement {
     }
   }
 
-  const formatHour = String(hours).padStart(2, "0")
-  const formatMinte = String(minutes).padStart(2, "0")
-  const formatSecond = String(seconds).padStart(2, "0")
-  const formatTime = `${formatHour}:${formatMinte}:${formatSecond}`
-
   return (
     <Container maxWidth={"sm"}>
       <Box sx={{ textAlign: "center" }}>
-        <Typography>Title</Typography>
-        <Typography variant={"h2"}>{formatTime}</Typography>
+        <Typography>{title}</Typography>
+        <Typography variant={"h2"}>
+          {format(hours, minutes, seconds)}
+        </Typography>
       </Box>
       <LinearProgress
         variant={"determinate"}
