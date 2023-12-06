@@ -1,6 +1,7 @@
 import { type ReactElement } from "react"
 
-import { Box, Container } from "@mui/material"
+import { Box, Container, Grid } from "@mui/material"
+import { EndTimerList } from "./components/EndTimerList"
 import { TimeCounter } from "./components/Timer"
 import { TimerForm } from "./components/TimerForm"
 import { TimerList } from "./components/TimerList"
@@ -13,7 +14,14 @@ export function Timer (): ReactElement {
         <TimerForm />
       </Box>
 
-      <TimerList />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <TimerList />
+        </Grid>
+        <Grid item xs={6}>
+          <EndTimerList />
+        </Grid>
+      </Grid>
     </Container>
   )
 }

@@ -8,6 +8,7 @@ import {
   Typography
 } from "@mui/material"
 import { useTimer } from "react-timer-hook"
+import { useEndTimerStorage } from "../../hooks/useEndTimerStorage"
 import { useSchedule } from "../../hooks/useSchedule"
 import { useTimeFormat } from "../../hooks/useTimeFormat"
 import { useTimerStorage } from "../../hooks/useTimerStorage"
@@ -15,6 +16,7 @@ import { useTimerStorage } from "../../hooks/useTimerStorage"
 export function TimeCounter (): ReactElement {
   const { format } = useTimeFormat()
   const { timers, setTimers } = useTimerStorage()
+  const { endTimers, setEndTimers } = useEndTimerStorage()
   const { title, timeSecond, expiryTimestamp } = useSchedule()
 
   const {
@@ -30,6 +32,7 @@ export function TimeCounter (): ReactElement {
     expiryTimestamp,
     autoStart: false,
     onExpire: () => {
+      setEndTimers([timers[0], ...endTimers])
       setTimers([...timers.slice(1)])
     }
   })
