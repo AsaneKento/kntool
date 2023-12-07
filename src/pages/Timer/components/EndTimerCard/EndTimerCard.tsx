@@ -21,7 +21,7 @@ export function EndTimerCard (props: EndTimerCardProps): ReactElement {
 
   return (
     <Paper elevation={4} sx={cardStyle}>
-      <Typography variant={"h5"}>{timer.title}</Typography>
+      <Typography variant={"h5"} noWrap>{timer.title}</Typography>
       <Typography variant={"h5"}>
         {format(
           parseInt(timer.hours, 10),

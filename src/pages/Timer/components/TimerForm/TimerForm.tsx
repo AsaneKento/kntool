@@ -17,7 +17,7 @@ import type { TimerType } from "../../types"
 
 const timerFormSchema = z
   .object({
-    title: z.string(),
+    title: z.string().max(20),
     hours: z.string(),
     minutes: z.string(),
     seconds: z.string()

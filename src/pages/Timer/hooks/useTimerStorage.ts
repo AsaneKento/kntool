@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { timersState } from "../state"
 import type { TimerStateType } from "../types"
@@ -11,6 +11,7 @@ interface UseTimerStorageReturnType {
 
 export const useTimerStorage = (): UseTimerStorageReturnType => {
   const [timers, setTimers] = useRecoilState(timersState)
+  const [reload, setReload] = useState(false)
 
   const localStorageKey = "timers"
 
@@ -19,11 +20,14 @@ export const useTimerStorage = (): UseTimerStorageReturnType => {
 
     if (storedArray != null) {
       setTimers(JSON.parse(storedArray))
+      setReload(true)
     }
   }, [])
 
   useEffect(() => {
-    localStorage.setItem(localStorageKey, JSON.stringify(timers))
+    if (reload) {
+      localStorage.setItem(localStorageKey, JSON.stringify(timers))
+    }
   }, [timers])
 
   return {
